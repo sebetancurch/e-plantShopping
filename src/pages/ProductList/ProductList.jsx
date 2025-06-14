@@ -31,12 +31,6 @@ function ProductList() {
                 <div className="product-title">{plant.name}</div>
                 <p>{plant.description}</p>
                 <div className="product-price">{plant.cost}</div>
-                {/* <button
-                  className="product-button"
-                  onClick={() => handleAddToCart(category.category, plant)}
-                >
-                  {plant.selected ? "Remove from Cart" : "Add to Cart"}
-                </button> */}
               </button>
             ))}
           </div>
