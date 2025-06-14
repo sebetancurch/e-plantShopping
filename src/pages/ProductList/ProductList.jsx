@@ -18,7 +18,11 @@ function ProductList() {
           <h2 className="category-title">{category.category}</h2>
           <div className="product-list">
             {category.plants.map((plant, plantIndex) => (
-              <div key={plantIndex} className="product-card">
+              <button
+                key={plantIndex}
+                className={`product-card ${plant.selected ? "in-cart" : ""}`}
+                onClick={() => handleAddToCart(category.category, plant)}
+              >
                 <img
                   className="product-image"
                   src={plant.image}
@@ -27,13 +31,13 @@ function ProductList() {
                 <div className="product-title">{plant.name}</div>
                 <p>{plant.description}</p>
                 <div className="product-price">{plant.cost}</div>
-                <button
+                {/* <button
                   className="product-button"
                   onClick={() => handleAddToCart(category.category, plant)}
                 >
                   {plant.selected ? "Remove from Cart" : "Add to Cart"}
-                </button>
-              </div>
+                </button> */}
+              </button>
             ))}
           </div>
         </div>
