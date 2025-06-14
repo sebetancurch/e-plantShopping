@@ -1,30 +1,47 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, removeItem, updateQuantity } from "@/redux/CartSlice";
+import { removeItem, updateQuantity } from "@/redux/CartSlice";
 import "./CartItem.css";
+import { Link } from "react-router-dom";
 
-const CartItem = ({ onContinueShopping }) => {
-  const cart = useSelector((state) => state.cart.items);
+const CartItem = () => {
+  const cart = useSelector((state) => state.cart.items).reduce((acc, item) => {
+    const selectedCategoryItems = item.plants.filter((plant) => plant.selected);
+    if (selectedCategoryItems && selectedCategoryItems.length > 0) {
+      return [...acc, ...selectedCategoryItems];
+    }
+    return acc;
+  }, []);
   const dispatch = useDispatch();
 
   // Calculate total amount for all products in the cart
-  const calculateTotalAmount = () => {};
+  const totalAmount = cart.reduce((total, item) => {
+    const costNumber = Number(item.cost.replace(/[^0-9.]/g, ""));
+    return total + costNumber * item.quantity;
+  }, 0);
 
-  const handleContinueShopping = (e) => {};
+  const handleIncrement = (plant) => {
+    dispatch(updateQuantity({ plant, isIncrease: true }));
+  };
 
-  const handleIncrement = (item) => {};
+  const handleDecrement = (plant) => {
+    dispatch(updateQuantity({ plant, isIncrease: false }));
+  };
 
-  const handleDecrement = (item) => {};
-
-  const handleRemove = (item) => {};
+  const handleRemove = (plant) => {
+    dispatch(removeItem({ plant }));
+  };
 
   // Calculate total cost based on quantity for an item
-  const calculateTotalCost = (item) => {};
+  const calculateTotalCost = (item) => {
+    const costNumber = Number(item.cost.replace(/[^0-9.]/g, ""));
+    return costNumber * item.quantity;
+  };
 
   return (
     <div className="cart-container">
       <h2 style={{ color: "black" }}>
-        Total Cart Amount: ${calculateTotalAmount()}
+        Total Cart Amount: $
+        {Number.isNaN(totalAmount) ? 0 : totalAmount.toFixed(2)}
       </h2>
       <div>
         {cart.map((item) => (
@@ -68,12 +85,9 @@ const CartItem = ({ onContinueShopping }) => {
         className="total_cart_amount"
       ></div>
       <div className="continue_shopping_btn">
-        <button
-          className="get-started-button"
-          onClick={(e) => handleContinueShopping(e)}
-        >
+        <Link className="get-started-button" to="/product-list">
           Continue Shopping
-        </button>
+        </Link>
         <br />
         <button className="get-started-button1">Checkout</button>
       </div>

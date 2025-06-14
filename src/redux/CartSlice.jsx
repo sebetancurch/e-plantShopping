@@ -167,15 +167,6 @@ export const CartSlice = createSlice({
             selected: false,
           },
           {
-            name: "Lavender",
-            image:
-              "https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "Calming scent, used in aromatherapy.",
-            cost: "$20",
-            quantity: 0,
-            selected: false,
-          },
-          {
             name: "Catnip",
             image:
               "https://cdn.pixabay.com/photo/2015/07/02/21/55/cat-829681_1280.jpg",
@@ -321,26 +312,34 @@ export const CartSlice = createSlice({
       );
       if (plantToUpdate) {
         plantToUpdate.selected = !plantToUpdate.selected;
+        if (plantToUpdate.selected) {
+          plantToUpdate.quantity++;
+        } else {
+          plantToUpdate.quantity = 0;
+        }
       }
     },
     removeItem: (state, action) => {
-      const { category, plant } = action.payload;
-      const itemSection = state.items.find(
-        (sectionItem) => sectionItem.category === category
-      );
-      let plantToUpdate = itemSection.plants.find(
+      const { plant } = action.payload;
+      let fullPLantsList = [];
+      for (const section of state.items) {
+        fullPLantsList.push(...section.plants);
+      }
+      let plantToUpdate = fullPLantsList.find(
         (plantItem) => plantItem.name === plant.name
       );
       if (plantToUpdate) {
         plantToUpdate.selected = false;
+        plantToUpdate.quantity = 0;
       }
     },
     updateQuantity: (state, action) => {
-      const { category, plant, isIncrease } = action.payload;
-      const itemSection = state.items.find(
-        (sectionItem) => sectionItem.category === category
-      );
-      let plantToUpdate = itemSection.plants.find(
+      const { plant, isIncrease } = action.payload;
+      let fullPLantsList = [];
+      for (const section of state.items) {
+        fullPLantsList.push(...section.plants);
+      }
+      let plantToUpdate = fullPLantsList.find(
         (plantItem) => plantItem.name === plant.name
       );
       if (plantToUpdate) {
