@@ -6,7 +6,7 @@ import AboutUs from "./pages/AboutUs/AboutUs.jsx";
 
 function App() {
   return (
-    <BrowserRouter basename="/e-plantshopping">
+    <BrowserRouter basename="/e-plantShopping">
       <Routes>
         <Route path="/" element={<AboutUs />} />
         <Route path="/" element={<MainLayout />}>

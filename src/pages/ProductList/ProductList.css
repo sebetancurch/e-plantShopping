@@ -40,21 +40,22 @@ body {
 
 /* Product Card */
 .product-card {
-    flex: 0 0 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap */
-    max-width: calc(26.33% - 20px); /* Adjust max-width for 3 cards per row with 20px gap */
+    all: unset;
+    flex: 0 0 calc(25% - 20px); /* Adjust width for 3 cards per row with 20px gap */
+    max-width: calc(20% - 20px); /* Adjust max-width for 3 cards per row with 20px gap */
+    min-width: 300px;
     margin-bottom: 20px;
-    padding: 20px;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
     position: relative;
-    
     gap: 20px;
 }
 
 /* Pseudo-classes - Hover effect on product button */
 .product-card:hover {
+    cursor: pointer;
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
     z-index: 1;
@@ -72,8 +73,10 @@ body {
 }
 
 .product-image {
-    max-width: 100%;
-    height: 200px; /* Adjust height for better consistency */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
 }
 
 .product-button {
@@ -91,15 +94,15 @@ body {
 }
 
 /* Pseudo-elements - Sale badge */
-.product-card::before {
-    content: "SALE";
+.product-card.in-cart::before {
+    content: "IN CART";
     background-color: #e74c3c;
     color: #fff;
     position: absolute;
     top: 0;
     right: 0;
     padding: 5px 10px;
-    border-radius: 0 0 0 5px;
+    border-radius: 0 10px 0 0;
 }
 
 /* Add Media Query for responsiveness */
@@ -132,6 +135,30 @@ body {
   .product-button.added-to-cart {
     background-color: grey; /* Grey when product is added */
   }
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 20px;
+  gap: 40px;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 500px;
+  height: 40px;
+  font-size: 16px;
+}
+
   @media (max-width: 1200px) {
     .product-card {
       flex: 1 1 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap on medium screens */
