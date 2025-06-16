@@ -1,7 +1,7 @@
 import "./ProductList.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/redux/CartSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ProductList() {
   const items = useSelector((state) => state.cart.items);
@@ -40,6 +40,11 @@ function ProductList() {
     setList(filteredItems);
     setPlantInput(plant);
   };
+
+  useEffect(() => {
+    handleCategorySearch(categoryInput);
+    handlePlantSearch(plantInput);
+  }, [items]);
 
   return (
     <>
